@@ -2,16 +2,23 @@
 
 import React from "react"; //this is how we can use react
 
-const Form = ({setInputText}) => {
+const Form = ({setInputText, todos, setTodos, inputText}) => {
   //Here I can write JS code and function
   const inputTextHandler = (e) => {
     console.log(e.target.value);
     setInputText(e.target.value);
-  }
+  };
+  const submitTodoHandler = (e) => {
+    e.preventDefault();
+    setTodos([
+      ...todos, {text: inputText, completed: false, id: Math.random() * 1000}
+    ]);
+    setInputText(""); //sets the state back to zero
+  };
   return (
     <form>
-      <input onChange={inputTextHandler} type="text" className="todo-input" />
-      <button className="todo-button" type="submit">
+      <input value={inputText} onChange={inputTextHandler} type="text" className="todo-input" />
+      <button onClick={submitTodoHandler} className="todo-button" type="submit">
         <i className="fas fa-plus-square"></i>
       </button>
       <div className="select">
